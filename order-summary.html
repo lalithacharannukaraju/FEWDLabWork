@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Summary</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            text-align: center;
+        }
+        
+        #main-heading {
+            color: #ff5733;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .nav-menu {
+            background-color: #333;
+            padding: 10px;
+        }
+        
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        
+        .nav-menu a:hover {
+            text-decoration: underline;
+        }
+        
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #ff5733;
+            color: white;
+        }
+        
+        #total {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-menu">
+        <a href="index.html">Home</a>
+        <a href="#">Order Summary</a>
+    </nav>
+    
+    <h1 id="main-heading">Order Summary</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Dish Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody id="order-summary-body">
+        </tbody>
+    </table>
+    
+    <p id="total">Total: Rs.0.00</p>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let order = JSON.parse(localStorage.getItem('order')) || [];
+            let orderSummaryBody = document.getElementById('order-summary-body');
+            let total = 0;
+            
+            order.forEach(dish => {
+                let row = document.createElement('tr');
+                row.innerHTML = `<td>${dish.name}</td><td>Rs.${dish.price.toFixed(2)}</td>`;
+                orderSummaryBody.appendChild(row);
+                total += dish.price;
+            });
+            
+            document.getElementById('total').textContent = `Total: Rs.${total.toFixed(2)}`;
+        });
+    </script>
+</body>
+</html>
